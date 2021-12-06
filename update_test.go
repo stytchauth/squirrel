@@ -10,7 +10,12 @@ func TestUpdateBuilderToSql(t *testing.T) {
 	b := Update("").
 		Prefix("WITH prefix AS ?", 0).
 		Table("a").
-		Join("j1").
+		JoinClause("CROSS JOIN j1").
+		Join("j2").
+		LeftJoin("j3").
+		RightJoin("j4").
+		InnerJoin("j5").
+		CrossJoin("j6").
 		Set("b", Expr("? + 1", 1)).
 		SetMap(Eq{"c": 2}).
 		Set("c1", Case("status").When("1", "2").When("2", "1")).
@@ -28,7 +33,12 @@ func TestUpdateBuilderToSql(t *testing.T) {
 	expectedSql :=
 		"WITH prefix AS ? " +
 			"UPDATE a " +
-			"JOIN j1 " +
+			"CROSS JOIN j1 " +
+			"JOIN j2 " +
+			"LEFT JOIN j3 " +
+			"RIGHT JOIN j4 " +
+			"INNER JOIN j5 " +
+			"CROSS JOIN j6 " +
 			"SET b = ? + 1, c = ?, " +
 			"c1 = CASE status WHEN 1 THEN 2 WHEN 2 THEN 1 END, " +
 			"c2 = CASE WHEN a = 2 THEN ? WHEN a = 3 THEN ? END, " +

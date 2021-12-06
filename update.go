@@ -231,6 +231,26 @@ func (b UpdateBuilder) Join(join string, rest ...interface{}) UpdateBuilder {
 	return b.JoinClause("JOIN "+join, rest...)
 }
 
+// LeftJoin adds a LEFT JOIN clause to the query.
+func (b UpdateBuilder) LeftJoin(join string, rest ...interface{}) UpdateBuilder {
+	return b.JoinClause("LEFT JOIN "+join, rest...)
+}
+
+// RightJoin adds a RIGHT JOIN clause to the query.
+func (b UpdateBuilder) RightJoin(join string, rest ...interface{}) UpdateBuilder {
+	return b.JoinClause("RIGHT JOIN "+join, rest...)
+}
+
+// InnerJoin adds a INNER JOIN clause to the query.
+func (b UpdateBuilder) InnerJoin(join string, rest ...interface{}) UpdateBuilder {
+	return b.JoinClause("INNER JOIN "+join, rest...)
+}
+
+// CrossJoin adds a CROSS JOIN clause to the query.
+func (b UpdateBuilder) CrossJoin(join string, rest ...interface{}) UpdateBuilder {
+	return b.JoinClause("CROSS JOIN "+join, rest...)
+}
+
 // Set adds SET clauses to the query.
 func (b UpdateBuilder) Set(column string, value interface{}) UpdateBuilder {
 	return builder.Append(b, "SetClauses", setClause{column: column, value: value}).(UpdateBuilder)
