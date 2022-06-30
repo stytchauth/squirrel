@@ -27,7 +27,7 @@ func TestDeleteBuilderToSql(t *testing.T) {
 
 	expectedSql :=
 		"WITH prefix AS ? " +
-			"DELETE FROM a " +
+			"DELETE a FROM a " +
 			"CROSS JOIN j1 " +
 			"JOIN j2 " +
 			"LEFT JOIN j3 " +
