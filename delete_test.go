@@ -60,17 +60,17 @@ func TestDeleteBuilderPlaceholders(t *testing.T) {
 	b := Delete("test").Where("x = ? AND y = ?", 1, 2)
 
 	sql, _, _ := b.PlaceholderFormat(Question).ToSql()
-	assert.Equal(t, "DELETE FROM test WHERE x = ? AND y = ?", sql)
+	assert.Equal(t, "DELETE test FROM test WHERE x = ? AND y = ?", sql)
 
 	sql, _, _ = b.PlaceholderFormat(Dollar).ToSql()
-	assert.Equal(t, "DELETE FROM test WHERE x = $1 AND y = $2", sql)
+	assert.Equal(t, "DELETE test FROM test WHERE x = $1 AND y = $2", sql)
 }
 
 func TestDeleteBuilderRunners(t *testing.T) {
 	db := &DBStub{}
 	b := Delete("test").Where("x = ?", 1).RunWith(db)
 
-	expectedSql := "DELETE FROM test WHERE x = ?"
+	expectedSql := "DELETE test FROM test WHERE x = ?"
 
 	b.Exec()
 	assert.Equal(t, expectedSql, db.LastExecSql)
@@ -87,7 +87,7 @@ func TestDeleteWithQuery(t *testing.T) {
 	db := &DBStub{}
 	b := Delete("test").Where("id=55").Suffix("RETURNING path").RunWith(db)
 
-	expectedSql := "DELETE FROM test WHERE id=55 RETURNING path"
+	expectedSql := "DELETE test FROM test WHERE id=55 RETURNING path"
 	b.Query()
 
 	assert.Equal(t, expectedSql, db.LastQuerySql)

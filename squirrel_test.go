@@ -113,7 +113,7 @@ var testDebugDeleteSQL = Delete("table").Where(And{
 	Eq{"column": "val"},
 	Eq{"other": 1},
 })
-var expectedDebugDeleteSQL = "DELETE FROM table WHERE (column = 'val' AND other = '1')"
+var expectedDebugDeleteSQL = "DELETE table FROM table WHERE (column = 'val' AND other = '1')"
 
 func TestDebugSqlizerDeleteColon(t *testing.T) {
 	testDebugDeleteSQL.PlaceholderFormat(Colon)

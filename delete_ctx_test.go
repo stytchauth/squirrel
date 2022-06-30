@@ -12,7 +12,7 @@ func TestDeleteBuilderContextRunners(t *testing.T) {
 	db := &DBStub{}
 	b := Delete("test").Where("x = ?", 1).RunWith(db)
 
-	expectedSql := "DELETE FROM test WHERE x = ?"
+	expectedSql := "DELETE test FROM test WHERE x = ?"
 
 	b.ExecContext(ctx)
 	assert.Equal(t, expectedSql, db.LastExecSql)
