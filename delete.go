@@ -46,7 +46,12 @@ func (d *deleteData) ToSql() (sqlStr string, args []interface{}, err error) {
 		sql.WriteString(" ")
 	}
 
-	sql.WriteString("DELETE FROM ")
+	// For DELETE JOINs, we need to say where we're deleting from.
+	// DELETE FROM X doesn't do that on its own, so we now query
+	// with DELETE X FROM X which is safe for non-JOIN queries.
+	sql.WriteString("DELETE ")
+	sql.WriteString(d.From)
+	sql.WriteString(" FROM ")
 	sql.WriteString(d.From)
 
 	if len(d.Joins) > 0 {
